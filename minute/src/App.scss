@@ -1,0 +1,28 @@
+.App {
+	background: #171717;
+	-webkit-box-shadow: 0px -110px 40px -40px rgb(0 0 0) inset;
+	-moz-box-shadow: 0px -110px 40px -40px rgb(0 0 0) inset;
+	box-shadow: 0px -110px 40px -40px rgb(0 0 0) inset;
+	overflow: hidden;
+	color: #fff;
+	&_wrapper {
+		width: 100%;
+		height: 100vh;
+		padding-bottom: 71px;
+		overflow: hidden;
+		position: relative;
+		background: linear-gradient(26.05deg, rgba(15, 153, 24, 0.14) 0%, rgba(8, 8, 8, 0) 72.24%),
+		radial-gradient(
+			100% 100% at 0% 100%,
+			rgba(0, 170, 255, 0.12) 0%,
+			rgba(8, 8, 8, 0) 99.69%
+		),
+		radial-gradient(
+			74.68% 149.35% at 50% 149.35%,
+			rgba(0, 102, 255, 0.3) 0%,
+			rgba(8, 8, 8, 0) 99.69%
+		);
+	}
+}
+
+@import './media.scss';

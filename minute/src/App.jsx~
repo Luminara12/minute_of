@@ -1,0 +1,381 @@
+import {useState, useMemo} from 'react';
+import './App.css';
+
+
+
+function put(q)
+{
+    return q[0] + " " + q[1] + " ";
+}
+
+var f1;
+
+
+function Smile(props)
+{
+    let size = Number(props.size);
+    let data = props.data;
+    if (data === undefined)
+	data = [10, 20, 30];
+    const [k, setK] = useState(0);
+
+    // function get_smiley(center, dist, width,  proc) {
+    // 	let ret = [];
+    
+    // 	if (k < 1)
+    // 	    return <></>;
+
+    // 	let r = k - 1;
+
+    // 	let q1 = Array();
+    // 	Object.assign(q1, center);
+    // 	let q2 = Array();
+    // 	Object.assign(q1, center);
+
+    
+    // 	q1[1] += dist/2;
+    
+
+    // 	ret.push(
+    // 	    <path d="M " + put(center) +  />
+    // 	)
+
+    // 	return <></>;
+    // }
+
+    function get_eyes(center, dist, width, proc, color, coef=1) {
+	if (proc <= 0.001)
+	    proc = 0.001
+	if (proc >= 0.999)
+	    proc = 0.999;
+	let ret = [];
+	let quan =0.9;
+	let q1 = [center[0] - coef * (dist/2) * quan + width/2 , center[1] - (dist/2) * quan ];
+	let q2 = [center[0] - coef * (dist/2) * quan - width/2 , center[1] - (dist/2) * quan ];
+
+	let g1 = [];
+	let g2 = [];
+	Object.assign(g1, q1);
+	Object.assign(g2, q2);
+	g1[1] += ((dist / 2  * quan) - width/2) * (proc);
+	g2[1] += ((dist / 2  * quan) - width/2) * (proc);
+	
+	// ret.push(<circle cx={q1[0]} cy={q1[1]} r={2} fill="purple" /> );
+	// ret.push(<circle cx={q2[0]} cy={q2[1]} r={2} fill="purple" /> );
+	// ret.push(<circle cx={g1[0]} cy={g1[1]} r={4} fill="aqua" /> );
+	// ret.push(<circle cx={g2[0]} cy={g2[1]} r={4} fill="aqua" /> );
+	ret.push(<path d={"M " + put(q1)  +
+			  " A " + width/2 + " " + width/2 + " 0 1 0 " + put(q2)
+			  + " L " + put(g2)
+			  + " A " + width/2 + " " + width/2 + " 0 1 0 " + put(g1)
+			  + " L " + put(q1)
+			 }
+		 fill={color}
+		 />);
+	return ret;
+    }
+
+    function get_lower(center, dist, width, proc, color) {
+	if (proc <= 0.001)
+	    proc = 0.001
+	if (proc >= 0.999)
+	    proc = 0.999;
+
+	let ret = [];
+	let quan = 0.8;
+	let q1 = [center[0] - (dist/2) * quan, center[1] + (dist/2) * quan];
+
+	
+	let norm = [q1[0] - center[0], q1[1] - center[1]];
+	let len = Math.sqrt(norm[0] * norm[0] + norm[1] * norm[1]);
+	norm[0] /= len;
+	norm[1] /= len;
+
+	let q2 = [q1[0] + width * norm[0], q1[1] + width * norm[1]];
+	let ang = (Math.asin(norm[1]));
+
+	// p is for polar
+	let g1p = [ang - (1 - proc) * ang * 2 , Math.sqrt(Math.pow(center[0] - q1[0], 2) + Math.pow(center[1] - q1[1], 2))];
+	let g1 = [center[0] + Math.sin(g1p[0]) * g1p[1], center[1] + Math.cos(g1p[0]) * g1p[1]];
+
+	let g2p = [ang - (1 - proc) * ang * 2 , Math.sqrt(Math.pow(center[0] - q2[0], 2) + Math.pow(center[1] - q2[1], 2))];
+	let g2 = [center[0] + Math.sin(g2p[0]) * g2p[1], center[1] + Math.cos(g2p[0]) * g2p[1]];
+
+
+	// ret.push(<circle cx={q1[0]} cy={q1[1]} r={2} fill="blue" /> );
+	// ret.push(<circle cx={q2[0]} cy={q2[1]} r={2} fill="purple" /> );
+	// ret.push(<circle cx={g1[0]} cy={g1[1]} r={4} fill="aqua" /> );
+	// ret.push(<circle cx={g2[0]} cy={g2[1]} r={4} fill="aqua" /> );
+
+	ret.push(<path d={"M " + put(q1)
+			  + " A " + width/2 + " " + width/2 + " 0 1 0 " + put(q2)
+			  + " A " + g2p[1] + " " + g2p[1] + " 0 0 0 " + put(g2)
+			  + " A " + width/2 + " " + width/2 + " 0 1 0 " + put(g1)
+			  + " A " + g1p[1] + " " + g1p[1] + " 0 0 1 " + put(q1)
+			 }
+		 fill={color}
+		 />);
+	return ret;
+    }
+
+    function get_paths(center, dist, width, proc, color) {
+	let ret = [];
+	if (proc !== 0)
+	    ret = ret.concat(get_path_start(center, dist, width, proc, color));
+	if (proc > 1)
+	    ret = ret.concat(get_eyes(center, dist, width, (proc - 1) * 3, color, 1));
+	if (proc > 1.33)
+	    ret = ret.concat(get_eyes(center, dist, width, (proc - 1.33) * 3, color, -1));
+	if (proc > 1.66)
+	    ret = ret.concat(get_lower(center, dist, width, (proc - 1.66) * 1.5, color));
+	return ret;
+	
+    }
+    
+    function get_path_start(center, dist, width, proc, color) {
+	if (proc <= 0.001)
+	    proc = 0.001
+	if (proc >= 0.999)
+	    proc = 0.999;
+	let ret = []
+	//By the law of cosines we find an angle between the center of the circle and
+	// OY line; also setting it from starting point
+	let alpha = Math.PI / 2 - Math.acos(1 - ((width * width) / (8 * dist * dist)));
+
+	//calculating normal and inverting y-axis
+	let norm = [Math.cos(alpha), -Math.sin(alpha)];
+
+	//calculating distanse to two points
+	let l1 = dist - width / 2;
+	let l2 = dist + width / 2;
+
+	//calculating copints themselves
+	let q1 = [norm[0] * l1, norm[1] * l1];
+	let q2 = [norm[0] * l2, norm[1] * l2];
+	q1[0] += center[0];
+	q1[1] += center[1];
+
+	q2[0] += center[0];
+	q2[1] += center[1];
+
+
+	let lsf = "0";
+	// let lsfm1 = "1";
+	if (proc > 0.5) {
+	    lsf = "1";
+	    // lsfm1 = "0";
+	}
+	
+	let beta = alpha - (2 * Math.PI * proc);
+
+	let norm1 = [Math.cos(beta), -Math.sin(beta)];
+
+	let g1 = [norm1[0] * l1, norm1[1] * l1];
+	let g2 = [norm1[0] * l2, norm1[1] * l2];
+
+	g1[0] += center[0];
+	g1[1] += center[1];
+
+	g2[0] += center[0];
+	g2[1] += center[1];
+
+	// fill="url(#Gradient1)"
+
+	ret.push( <path key="1" d={"M " + put(q1) + "A " + width/2 + " " + width/2 + " 0 0 1 " + put(q2)
+			   + "A " + l2 + " " + l2 + " 0 " + lsf +  "  1 " + put(g2)
+			   + "A " + width/2 + " " + width/2 + " 0 0 1 " + put(g1)
+			   + "A " + l1 + " " + l1 + " 0 " + lsf + " 0 " + put(q1)
+				  } id="swift"
+		  fill={color}
+
+		  />);
+
+	// ret.push( <path key="2" d={"M " + put(q1) + "A " + width/2 + " " + width/2 + " 0 0 1 " + put(q2)
+	// 		   + "A " + l2 + " " + l2 + " 0 " + lsfm1 +  "  0 " + put(g2)
+	// 		   + "A " + width/2 + " " + width/2 + " 0 0 1 " + put(g1)
+	// 		   + "A " + l1 + " " + l1 + " 0 " + lsfm1 + " 1 " + put(q1)
+	// 		  } fill={color + "2a" } />);
+	
+
+	
+
+
+	// ret.push( <circle cx={g2[0]} cy={g2[1]} r={5} fill="red" /> )
+	// ret.push( <path d={"M " + put(center) + "L " + put(q2)} stroke="black" fill="none"/> )
+
+	
+	
+	// for (let i = 0; i < 1; i+= 0.03) {
+
+	//     beta = alpha - (2 * Math.PI * i);
+
+	//     norm1 = [Math.cos(beta), -Math.sin(beta)];
+
+	//     g1 = [norm1[0] * l1, norm1[1] * l1];
+	//     g2 = [norm1[0] * l2, norm1[1] * l2];
+	//     g1[0] += center[0];
+	//     g1[1] += center[1];
+	
+	//     g2[0] += center[0];
+	//     g2[1] += center[1];
+	
+	//     ret.push( <circle cx={g2[0]} cy={g2[1]} r={2} fill="red" /> )
+	//     ret.push( <circle cx={g1[0]} cy={g1[1]} r={2} fill="green" /> )	    
+	// }
+	return ret;
+    }
+
+    
+
+    f1 = () =>  {
+	let ofc = 0;
+	let ttl = 2000;
+	let delta = 16;
+	let id = setInterval(
+	    () => {
+		if (ofc >= ttl * 3)
+		    clearInterval(id);
+		else {
+		    ofc += delta;
+		    setK(ofc / ttl);
+		}
+		
+	    }, delta
+	)
+    }
+
+    // <button  style={
+    // 		    {
+    // 			position: "fixed",
+    // 			top: "2em",
+    // 			left: "2em",
+    // 			padding: "10px"
+    // 		    }}onClick={animate}>start</button>
+    
+    let center = [size/2, size/2];
+
+    return <div >
+	       <button  style={
+			    {
+				position: "fixed",
+				top: "2em",
+				left: "2em",
+				padding: "20px"
+			    }}onClick={f1}>start</button>
+	       <svg width={size} height={size} key={10}>
+
+
+				      <linearGradient id="Gradient1" x1="0" x2="0" y1="0" y2="1">
+					  <stop offset="0%" stopColor="#cf87da"/>
+					  <stop offset="50%" stopColor="#cfc4d1"/>
+					  <stop offset="100%" stopColor="#cab8df"/>
+				      </linearGradient>
+		   {get_paths(center, size/3, size/20, k, "url(#Gradient1)")}
+		   
+				  </svg>
+	   </div>;
+
+    		   // <path d={"M " + center[0] + " 0 l 0 " + size + " "} stroke="black"/>
+		   // <path d={"M 0 " + center[1] + " l " + size + " 0  "} stroke="black"/>
+    
+}
+
+function PulsingCircle(props)
+{
+    const [gamma, setGamma] = useState(50);    
+    const maxGamma = 50;
+
+    function gammaToRad(g)
+    {
+	return g;
+    }
+
+    function gammaToColorArray(g)
+    {
+	// In this range we just have a cube of possible colors
+	const range = [[0, 255], [0, 255], [0, 255]];
+
+	return [
+	    range[0][0] + (g / maxGamma) * (range[0][1] - range[0][0]),
+	    range[1][0] + (g / maxGamma) * (range[1][1] - range[1][0]),
+	    range[2][0] + (g / maxGamma) * (range[2][1] - range[2][0]),
+	];
+    }
+    // return <>
+    // 	       {JSON.stringify(gammaToColorArray(gamma))}
+    // 	   </>
+
+    function anim() {
+	let ofc = 0;
+	let ttl = 2000;
+	let delta = 16;
+	let id = setInterval(
+	    () => {
+		if (ofc >= ttl && false)
+		    clearInterval(id);
+		else {
+		    ofc += delta;
+		    setGamma(Math.sin(ofc / ttl * Math.PI) * 25 + 100);
+		}
+		
+	    }, delta
+	)
+    }
+
+    const val_arr = useMemo(
+	() => {
+	    let ret = [];
+	    const max = 20;
+	    for (let i = 0; i <= max; i++) {
+		ret.push(150 + Math.sin(Math.PI * 2 * (i / max)) * 25);
+	    }
+	    let str = "";
+	    ret.map(
+		(i) => {
+		    str += i + ";";
+		}
+	    );
+
+	    return str;
+	}, []
+    )
+
+    const dur = "4500ms";
+
+    return <div width="100%" height="100%">
+	       <svg width="100%" height="100%">
+		   <defs>
+		       <radialGradient id="grad1" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+			   <stop offset="90%" stopColor="rgb(255,255,255)" stopOpacity="1" />
+			   <stop offset="100%" stopColor="rgb(255,255,255)" stopOpacity="0"/>
+		       </radialGradient>
+		       <linearGradient id="grad2" x1="30%" y1="70%">
+			   <stop offset="0%" stopColor="#ffc0cb">
+			       <animate attributeName="stop-color" values="#ffc0cb; #ffc0bb; #ffc0ab; #ffc0cb;" dur="4500ms" fill="freeze" repeatCount="indefinite" />
+			   </stop>
+			   <stop offset="100%" stopColor="#91bc9c">
+			       <animate attributeName="stop-color" values="#ffc0bb; #ffc0ab; #ffc0cb; #ff748c;  #ffc0bb" dur="4500ms" fill="freeze" repeatCount="indefinite" />
+			   </stop>
+		       </linearGradient>
+		   </defs>
+		   <rect width="100%" height="500" fill="url(#grad2)"/>
+		   <circle cx="50%" cy={250} r={100} fill="url(#grad1)">
+		       <animate attributeName="r" values={val_arr} dur="4s" repeatCount="indefinite" />
+		   </circle>
+
+	       </svg>
+	   </div>
+}
+
+
+// <Smile size={350} />
+function App() {
+    return (
+	<div className="App" style={{width: "100%"}}>
+	    <img src="./back.svg" />
+
+	</div>
+    );
+}
+
+export default App;

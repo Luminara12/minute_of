@@ -1,0 +1,516 @@
+@media (max-width: 1400px) {
+	.stories {
+		&_wrapper {
+			.wrapper {
+				width: 257px;
+				height: 557px;
+			}
+		}
+		&_btns {
+			width: 50%;
+		}
+	}
+}
+
+@media (max-width: 992px) {
+	.wrong_answer {
+		&_text span {
+			font-weight: 600;
+			font-size: 18px;
+			line-height: 30px;
+		}
+	}
+}
+
+@media (max-width: 768px) {
+	html {
+		overflow: hidden;
+	}
+	.stories {
+		width: 100%;
+		height: 100%;
+		&_wrapper {
+			padding: 0;
+			&:before {
+				display: none;
+			}
+			.wrapper {
+				// height: max-content;
+				height: 100%;
+				margin: 0;
+				padding: 0;
+				width: 100%;
+				.flex {
+					height: 100%;
+				}
+				.storie {
+					width: 100%;
+					height: 100%;
+					padding-bottom: 90px;
+				}
+			}
+		}
+		&_btns {
+			width: 100%;
+			height: calc(100vh - 110px);
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+			transform: unset;
+			.left,
+			.right {
+				background: none;
+				height: 100%;
+				width: 80px;
+				z-index: 5;
+				touch-action: none;
+				// pointer-events: none;
+				-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+			}
+		}
+		&_control_btns {
+			display: none;
+		}
+		&_time {
+			display: none;
+		}
+	}
+	.storie {
+		background-position: 0 75%;
+		.length {
+			font-size: 18px;
+			font-weight: 400;
+			.fat {
+				font-size: 26px;
+				color: white;
+			}
+		}
+		.subLength {
+			font-size: 18px;
+			padding-top: 3px;
+			font-weight: 400;
+			margin-bottom: 12%; //было 37
+		}
+		.ps {
+			color: white;
+			font-size: 10px;
+			margin-bottom: 1%;
+			font-weight: 300;
+		}
+	}
+	.header {
+		margin-bottom: 7%;
+		.text {
+			padding-top: 6%;
+			font-size: 16px;
+		}
+		span {
+			padding-top: 7%;
+		}
+	}
+	.leader {
+		.leadHead {
+			margin-bottom: 5%;
+		}
+		.sub_black {
+			color: white;
+			font-size: 22px;
+			font-weight: 450;
+		}
+		.sub_white {
+			font-size: 20px;
+			font-weight: 400;
+			&_bottom {
+				font-size: 20px;
+				font-weight: 400;
+				padding-top: 1%;
+				margin-bottom: 3%;
+			}
+		}
+	}
+	.flexCount {
+		.num {
+			font-size: 34px;
+			color:rgb(255, 255, 255);
+		}
+		.subtext {
+			font-size: 12px;
+			font-weight: 700;
+			color:rgb(255, 255, 255);
+		}
+		img {
+			height: 36px;
+		}
+		.icon {
+			padding-top: 0;
+		}
+	}
+	.personContainer {
+		margin: 6% auto 2% auto;
+		height: 13%;
+		.head {
+			padding-top: 2%;
+			padding-bottom: 2%;
+			font-size: 16px;
+			font-weight: 600;
+		}
+		.firstState {
+			color:rgb(0, 100, 190);
+			padding: 0 10%;
+			padding-top: 3%;
+			font-family: 'SB Sans Text';
+			font-style: normal;
+			font-weight: 700;
+			font-size: 20px;
+			line-height: 30px;
+			text-align: center;
+			letter-spacing: -0.019em;
+		}
+	}
+	.allStat {
+		.head {
+			font-size: 16px;
+			line-height: 20px;
+			font-weight: 700;
+			padding: 0 20% 3% 20%;
+		}
+	}
+	.soon {
+		margin-top: 6%;
+		.head {
+			font-size: 17px;
+			padding-top: 2%;
+			font-weight: 700;
+		}
+		.date {
+			font-size: 30px;
+			padding-top: 1%;
+		}
+	}
+	.storie_btn {
+		height: 7%;
+		border-radius: 10px;
+		font-size: 18px;
+		font-weight: 600;
+	}
+	.wrong_answer {
+		// z-index: 50;
+		height: 362px;
+		padding-top: 100px;
+		background: linear-gradient(140.26deg, #232323 32.26%, #060303 108.91%);
+		&_text span {
+			font-weight: 600;
+			font-size: 16px;
+			line-height: 30px;
+		}
+	}
+}
+
+@media (max-height: 770px) and (min-width: 769px) {
+	.stories_time {
+		position: absolute;
+		top: 20px;
+		margin-left: 0;
+		padding-left: 30px;
+	}
+	.stories_wrapper {
+		padding-top: 0px;
+		.wrapper {
+			margin-top: 30px;
+			height: 570px;
+			.storie {
+				&_bottom_wrapper {
+					margin-top: 20px;
+				}
+				&_maintxt {
+					margin-top: 250px;
+				}
+			}
+		}
+	}
+	.storie {
+		.length {
+			font-size: 10px;
+			font-weight: 400;
+			line-height: 20px;
+			.fat {
+				font-size: 18px;
+				line-height: 20px;
+			}
+		}
+		.subLength {
+			font-size: 10px;
+			line-height: 1.5;
+			padding-top: 0px;
+			font-weight: 400;
+			margin-bottom: 25%;
+		}
+		.ps {
+			color: white;
+			font-size: 6px;
+			margin-bottom: 1%;
+			font-weight: 400;
+			padding-left: 10px;
+		}
+	}
+	.header {
+		margin-bottom: 2%;
+		.text {
+			padding-top: 0;
+			font-size: 12px;
+			line-height: 14px;
+		}
+		span {
+			padding-top: 1%;
+		}
+	}
+	.leader {
+		.leadHead {
+			margin-bottom: 5%;
+		}
+		.sub_black {
+			color: white;
+			font-size: 22px;
+			font-weight: 450;
+		}
+		.sub_white {
+			font-size: 14px;
+			font-weight: 400;
+			line-height: 15px;
+			&_bottom {
+				font-size: 14px;
+				font-weight: 400;
+				padding-top: 0;
+				margin-bottom: 2%;
+				line-height: 15px;
+			}
+		}
+	}
+	.flexCount {
+		.num {
+			font-size: 26px;
+		}
+		.subtext {
+			font-size: 8px;
+			font-weight: 600;
+			padding-top: 10px;
+		}
+		.icon {
+			height: 18px;
+			width: 27px;
+		}
+	}
+	.personContainer {
+		margin: 3% auto 1% auto;
+		height: 12%;
+		border-radius: 15px;
+		.head {
+			padding-top: 1%;
+			padding-bottom: 1%;
+			font-size: 11px;
+			line-height: 13px;
+			font-weight: 700;
+		}
+		// .firstState {
+		// 	padding: 0 10%;
+		// 	padding-top: 3%;
+		// 	font-family: 'SB Sans Text';
+		// 	font-style: normal;
+		// 	font-weight: 700;
+		// 	font-size: 20px;
+		// 	line-height: 30px;
+		// 	text-align: center;
+		// 	letter-spacing: -0.019em;
+		// 	color: #383535;
+		// }
+	}
+	.allStat {
+		.head {
+			font-size: 12px;
+			line-height: 14px;
+			font-weight: 600;
+			padding: 0 20% 1% 20%;
+		}
+	}
+	.soon {
+		height: 10%;
+		border-radius: 15px;
+		margin-top: 4%;
+		margin-bottom: 1%;
+		.head {
+			font-size: 14px;
+			line-height: 14px;
+			padding-top: 2%;
+			font-weight: 600;
+		}
+		.date {
+			font-size: 22px;
+			line-height: 22px;
+			padding-top: 2%;
+		}
+	}
+	.storie_btn {
+		height: 6%;
+		border-radius: 10px;
+		font-size: 12px;
+		font-weight: 600;
+	}
+	.info_answer_text {
+		height: 43%;
+	}
+}
+
+@media (max-width: 375px) {
+	.stories_time {
+		position: absolute;
+		top: 20px;
+		margin-left: 0;
+		padding-left: 30px;
+	}
+	.stories_wrapper {
+		padding-top: 0px;
+		.wrapper {
+			margin-top: 30px;
+			height: 100%;
+			.storie {
+				&_bottom_wrapper {
+					margin-top: 20px;
+				}
+				&_maintxt {
+					margin-top: 250px;
+				}
+			}
+		}
+	}
+	.storie {
+		.length {
+			font-size: 13px;
+			font-weight: 400;
+			line-height: 20px;
+			.fat {
+				font-size: 18px;
+				line-height: 20px;
+			}
+		}
+		.subLength {
+			font-size: 13px;
+			line-height: 1.5;
+			padding-top: 0px;
+			font-weight: 400;
+			margin-bottom: 26%;
+		}
+		.ps {
+			color: white;
+			font-size: 7px;
+			margin-bottom: 1%;
+			font-weight: 600;
+			padding-left: 10px;
+		}
+	}
+	.header {
+		margin-bottom: 2%;
+		.text {
+			padding-top: 0;
+			font-size: 11px;
+			line-height: 14px;
+		}
+		span {
+			padding-top: 1%;
+		}
+	}
+	.leader {
+		.leadHead {
+			margin-bottom: 5%;
+		}
+		.sub_black {
+			color: white;
+			font-size: 21px;
+			font-weight: 450;
+		}
+		.sub_white {
+			font-size: 12px;
+			font-weight: 400;
+			line-height: 15px;
+			&_bottom {
+				font-size: 13px;
+				font-weight: 400;
+				padding-top: 0;
+				margin-bottom: 2%;
+				line-height: 15px;
+			}
+		}
+	}
+	.firstState {
+		margin-bottom: -2%;
+	}
+	.flexCount {
+		.num {
+			font-size: 25px;
+		}
+		.subtext {
+			font-size: 7px;
+			font-weight: 600;
+			padding-top: 10px;
+		}
+		.icon {
+			height: 18px;
+			width: 27px;
+		}
+	}
+	.personContainer {
+		margin: 3% auto 1% auto;
+		height: 12%;
+		border-radius: 15px;
+		.head {
+			padding-top: 1%;
+			padding-bottom: 1%;
+			font-size: 11px;
+			line-height: 13px;
+			font-weight: 700;
+		}
+		// .firstState {
+		// 	padding: 0 10%;
+		// 	padding-top: 3%;
+		// 	font-family: 'SB Sans Text';
+		// 	font-style: normal;
+		// 	font-weight: 700;
+		// 	font-size: 20px;
+		// 	line-height: 30px;
+		// 	text-align: center;
+		// 	letter-spacing: -0.019em;
+		// 	color: #383535;
+		// }
+	}
+	.allStat {
+		.head {
+			font-size: 11px;
+			line-height: 14px;
+			font-weight: 600;
+			padding: 0 20% 1% 20%;
+		}
+	}
+	.soon {
+		height: 10%;
+		border-radius: 15px;
+		margin-top: 4%;
+		margin-bottom: 1%;
+		.head {
+			font-size: 13px;
+			line-height: 14px;
+			padding-top: 2%;
+			font-weight: 600;
+		}
+		.date {
+			font-size: 21px;
+			line-height: 22px;
+			padding-top: 0;
+		}
+	}
+	.storie_btn {
+		height: 6%;
+		border-radius: 10px;
+		font-size: 11px;
+		font-weight: 600;
+	}
+}
