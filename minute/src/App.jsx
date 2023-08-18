@@ -1043,8 +1043,11 @@ function App() {
         <div style={{
           position: "fixed",
           left: "1rem",
+          right: '0',
           top: "1rem",
-          display: "flex"
+          display: "flex",
+          alignItems: "center",
+          justifyContent: 'flex-start'
         }}>
           <div style={{marginRight: "10px"}} id="goBack" onClick={
             () => {
@@ -1054,7 +1057,7 @@ function App() {
           }>
             <IconChevronLeft size="s" color="black"/>
           </div>
-          <div style={typography.headline3}>
+          <div style={{...typography.headline3, margin: "auto", transform: "translateX(-26px)"}}>
            Минута осознанности
           </div>
         </div>
